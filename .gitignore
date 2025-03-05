@@ -1,0 +1,11 @@
+# Exclude data folders
+en_v2
+jes_individual
+jes_combined
+
+#Exclude testing, extra code, etc. - only add final scientific and data compilation code
+convergence-testing.ipynb
+mlganderson-new-1-diag-linear-chain.py
+mlganderson-new-4-calculate-sigma-arbitrary-units.ipynb
+multi-run-combiner.py
+pristine-pseudo-mlganderson-1.py
