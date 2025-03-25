@@ -11,10 +11,10 @@ echo "These are the reps starting with "$(($repspernode*$whichrepset))
 # ACTIVATE PARALLELIZATION PACKAGES HERE #
 ##########################################
 
-# Keep these files local until we're done
+# We will keep files in the working directory until we're done
 home= # ENTER HOME DIRECTORY HERE
 work= # ENTER WORKING DIRECTORY HERE
-# Copy the necessary code there
+# Copy the necessary code to the working directory
 cp $home/mlganderson-new-1-diag.py $work/mlganderson-new-1-diag.py
 cp $home/mlganderson-new-2-calc-j.py $work/mlganderson-new-2-calc-j.py
 cp $home/mlganderson-new-3-combine-j.py $work/mlganderson-new-3-combine-j.py
@@ -51,7 +51,7 @@ echo "Done combining"
 rm -rf $work/jes_individual
 wait
 
-# Make the number string like a float if it's not
+# Make the number string appear to be a float if it has no decimal
 if [[ $wdisorder != *.* ]]; then
 	wdisorder=$wdisorder.0
 fi
