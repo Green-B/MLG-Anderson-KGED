@@ -4,7 +4,10 @@ This code calculates the Kubo-Greenwood conductivity of monolayer graphene (MLG)
 We use a tight-binding model for MLG and obtain its eigenenergies and velocity matrix elements through exact diagonzlation.
 By substituting the Hamiltonian and velocity matrix elements in `mlganderson-new-1-diag.py`, this code can be adapted to other systems as well.
 
-Each of the scripts here except the JuPyter notebook `mlganderson-new-4-calculate-sigma.ipynb` is designed to be used in HPC settings with command line arguments as described in the codes. The notebook can readily be used on a standard computer with arguments set in the notebook during use. Files named in the pattern `mlganderson-new-#-...` are used to generate and process data and are in principle all that is necessary to obtain results.
+Each of the essential Python scripts here except the JuPyter notebook `mlganderson-new-4-calculate-sigma.ipynb` is somewhat computationally intensive and is intended to be used in HPC settings with command line arguments as described in the codes.
+The shell scripts listed below are examples of how the essential scripts may be submitted to an HPC cluster.
+The notebook can readily be used on a standard computer with arguments set in the notebook during use.
+Files named in the pattern `mlganderson-new-#-...` are used to generate and process data and are in principle all that is necessary to obtain results.
 Files named in the pattern `mlganderson-new-x#-...` are for convenience due to adding data after a first complete run, making use of data from a partially-completed run, and similar circumstances.
 
 ### Essential scripts:
