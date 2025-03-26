@@ -10,7 +10,33 @@ The notebook can readily be used on a standard computer with arguments set in th
 Files named in the pattern `mlganderson-new-#-...` are used to generate and process data and are in principle all that is necessary to obtain results.
 Files named in the pattern `mlganderson-new-x#-...` are for convenience due to adding data after a first complete run, making use of data from a partially-completed run, and similar circumstances.
 
+## Overview - theory
+
+With $\hbar=1$ and $e=1$, the real part of the longitudinal conductivity as obtained from the Kubo formula is
+$$\begin{aligned}
+\Re\left( \sigma_{xx}(\omega) \right)
+& = \Re\left( \lim_{\eta \to 0} -\frac{i}{V} \sum_{n,m} \frac{f(E_n)-f(E_m)}{E_n-E_m} \frac{\left|v_{nm}\right|^2}{E_n-E_m+\omega+i\eta} \right) \\
+& = \frac{\pi}{V} \sum_{n,m} \frac{f(E_n)-f(E_m)}{E_n-E_m} \left|v_{nm}\right|^2 \delta(E_n-E_m+\omega) \\
+& = \frac{\pi}{V} \sum_{n,m} \left( \int_{-\infty}^{\infty} dE \int_{-\infty}^{\infty} dE' \delta(E-E_n)\delta(E'-E_m) \right) \frac{f(E_n)-f(E_m)}{E_n-E_m} \left|v_{nm}\right|^2 \delta(E_n-E_m+\omega) \\
+& = \frac{\pi}{V} \int_{-\infty}^{\infty} dE \int_{-\infty}^{\infty} dE' \left( \sum_{n,m} \left|v_{nm}\right|^2  \delta(E-E_n)\delta(E'-E_m) \right) \frac{f(E)-f(E')}{E-E'} \delta(E-E'+\omega) \\
+& = \frac{\pi}{V} \int_{-\infty}^{\infty} dE \int_{-\infty}^{\infty} dE' J\left(E,E'\right) \frac{f(E)-f(E')}{E-E'} \delta(E-E'+\omega)
+\end{aligned}$$
+where we have defined
+$$
+J\left(E,E'\right) = \sum_{n,m} \left|v_{nm}\right|^2  \delta(E-E_n)\delta(E'-E_m)
+$$
+Now transform variables to $s=E-E'$, $\varepsilon = \frac{E+E'}{2}$ with the Jacobian $J = \frac{\partial s}{\partial E}\frac{\partial \varepsilon}{\partial E'} - \frac{\partial s}{\partial E'} \frac{\partial \varepsilon}{\partial E} = 1$ and the previous expression becomes
+$$\begin{aligned}
+\Re\left( \sigma_{xx}(\omega) \right)
+& = \frac{\pi}{V} \int_{-\infty}^{\infty} d\varepsilon \int_{-\infty}^{\infty} ds J\left(\varepsilon+\frac{s}{2},\varepsilon-\frac{s}{2}\right) \frac{f(\varepsilon+\frac{s}{2})-f(\varepsilon-\frac{s}{2})}{s} \delta(s+\omega) \\
+& = \frac{\pi}{V} \int_{-\infty}^{\infty} d\varepsilon J\left(\varepsilon+\frac{s}{2},\varepsilon-\frac{s}{2}\right) \frac{f(\varepsilon+\frac{s}{2})-f(\varepsilon-\frac{s}{2})}{s}
+\end{aligned}$$
+The factor $J\left(\varepsilon+\frac{s}{2},\varepsilon-\frac{s}{2}\right)$ is the subject of `mlganderson-new-2-calc-j.py` and `mlganderson-new-3-combine-j.py`, where the Dirac deltas are treated by binning them into divisions in the space of $\varepsilon$ and $s$.
+
+## Overview - code
+
 ### Essential scripts:
+
 Each of the essential scripts requires the output files of the preceding script and no other input files.
 
 - `mlganderson-new-1-diag.py` creates models of disordered MLG and calculates their energies and x-direction velocity matrix elements. y-direction velocity is available in the code as well.
@@ -31,7 +57,7 @@ Each of the essential scripts requires the output files of the preceding script 
 	- Files produced:
 		1. `jes_individual/jes-w%s-ne%s-ns%s.pkl` - $J$ for this configuration with the file labeled by disorder, the two numbers of histogram bins, and configuration index
 
-- `mlganderson-new-2-combine-j.py` combines the results of many configurations so as to average over them.
+- `mlganderson-new-3-combine-j.py` combines the results of many configurations so as to average over them.
 	- Command line-arguments:
 		1. Anderson disorder strength $w$ such that site energies are in $[-w,w]$
 		2. Number of bins to use in histogramming energy averages
@@ -44,6 +70,7 @@ Each of the essential scripts requires the output files of the preceding script 
 	- Files produced: None; figures and numerical data are produced in the notebook
 
 ### Utility scripts:
+
 Each of the utility scripts inputs and outputs files of the same type, e.g., a script that takes a `jes-combined` file as input will produce a `jes-combined` file as output.
 
 - `mlganderson-new-x1-jes-reduce-ne-ns.py` combines bins in histogram used to calculate $J$, allowing for smoother averaging at the cost of lower resolution in frequency in the calculated conductivity.
@@ -58,7 +85,7 @@ Each of the utility scripts inputs and outputs files of the same type, e.g., a s
 	- Input and output files:
 		1. `jes-combined-w%s-ne%s-ns%s-n%s-nc%s.pkl` - $J$ combined for many configurations with the file labeled by disorder, the two numbers of histogram bins, the number of configurations aggregated in this data
 
-- `mlganderson-new-x2-jes-repshift.py` shifts the indexing of MLG disorder configurations. `mlganderson-new-2-combine-j.py` is designed to work on data from a single run of `mlganderson-new-2-calc-j.py` which labels output configurations starting with 1. Therefore, this script makes it easy to combine results of multiple runs of `mlganderson-new-2-calc-j.py` with `mlganderson-new-2-combine-j.py`.
+- `mlganderson-new-x2-jes-repshift.py` shifts the indexing of MLG disorder configurations. `mlganderson-new-3-combine-j.py` is designed to work on data from a single run of `mlganderson-new-2-calc-j.py` which labels output configurations starting with 1. Therefore, this script makes it easy to combine results of multiple runs of `mlganderson-new-2-calc-j.py` with `mlganderson-new-3-combine-j.py`.
 	- Command line-arguments:
 		1. Anderson disorder strength $w$ such that site energies are in $[-w,w]$
 		2. Number of bins previously used in histogramming energy averages
@@ -67,7 +94,7 @@ Each of the utility scripts inputs and outputs files of the same type, e.g., a s
 	- Input and output files:
 		1. `jes_individual/jes-w%s-ne%s-ns%s.pkl` - $J$ for this configuration with the file labeled by disorder, the two numbers of histogram bins, and configuration index
 
-- `mlganderson-new-x3-combine-jes-combined.py` allows two copies of the averaged $J$ outputted by `mlganderson-new-2-combine-j.py` to be combined. It can serve as another way to combine results from multiple runs.
+- `mlganderson-new-x3-combine-jes-combined.py` allows two copies of the averaged $J$ outputted by `mlganderson-new-3-combine-j.py` to be combined. It can serve as another way to combine results from multiple runs.
 	- Command line-arguments:
 		1. Number of configurations used in jes-combined file #1
 		2. User-written suffix in filename identifying jes-combined file #1
