@@ -42,6 +42,7 @@ $$
 $$
 
 The factor $J\left(\varepsilon+\frac{s}{2},\varepsilon-\frac{s}{2}\right)$ is the subject of `mlganderson-new-2-calc-j.py` and `mlganderson-new-3-combine-j.py`, where the Dirac deltas are treated by binning them into divisions in the space of $\varepsilon$ and $s$.
+The integration over $\varepsilon$ is carried out in `mlganderson-new-4-calculate-sigma.ipynb`.
 
 ## Overview - code
 
