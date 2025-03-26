@@ -13,24 +13,34 @@ Files named in the pattern `mlganderson-new-x#-...` are for convenience due to a
 ## Overview - theory
 
 With $\hbar=1$ and $e=1$, the real part of the longitudinal conductivity as obtained from the Kubo formula is
-$$\begin{aligned}
+
+$$
+\begin{aligned}
 \Re\left( \sigma_{xx}(\omega) \right)
 & = \Re\left( \lim_{\eta \to 0} -\frac{i}{V} \sum_{n,m} \frac{f(E_n)-f(E_m)}{E_n-E_m} \frac{\left|v_{nm}\right|^2}{E_n-E_m+\omega+i\eta} \right) \\
 & = \frac{\pi}{V} \sum_{n,m} \frac{f(E_n)-f(E_m)}{E_n-E_m} \left|v_{nm}\right|^2 \delta(E_n-E_m+\omega) \\
 & = \frac{\pi}{V} \sum_{n,m} \left( \int_{-\infty}^{\infty} dE \int_{-\infty}^{\infty} dE' \delta(E-E_n)\delta(E'-E_m) \right) \frac{f(E_n)-f(E_m)}{E_n-E_m} \left|v_{nm}\right|^2 \delta(E_n-E_m+\omega) \\
 & = \frac{\pi}{V} \int_{-\infty}^{\infty} dE \int_{-\infty}^{\infty} dE' \left( \sum_{n,m} \left|v_{nm}\right|^2  \delta(E-E_n)\delta(E'-E_m) \right) \frac{f(E)-f(E')}{E-E'} \delta(E-E'+\omega) \\
 & = \frac{\pi}{V} \int_{-\infty}^{\infty} dE \int_{-\infty}^{\infty} dE' J\left(E,E'\right) \frac{f(E)-f(E')}{E-E'} \delta(E-E'+\omega)
-\end{aligned}$$
+\end{aligned}
+$$
+
 where we have defined
+
 $$
-J\left(E,E'\right) = \sum_{n,m} \left|v_{nm}\right|^2  \delta(E-E_n)\delta(E'-E_m)
+J\left(E,E'\right) = \sum_{n,m} |v_{nm}|^2  \delta(E-E_n)\delta(E'-E_m)
 $$
+
 Now transform variables to $s=E-E'$, $\varepsilon = \frac{E+E'}{2}$ with the Jacobian $J = \frac{\partial s}{\partial E}\frac{\partial \varepsilon}{\partial E'} - \frac{\partial s}{\partial E'} \frac{\partial \varepsilon}{\partial E} = 1$ and the previous expression becomes
-$$\begin{aligned}
+
+$$
+\begin{aligned}
 \Re\left( \sigma_{xx}(\omega) \right)
 & = \frac{\pi}{V} \int_{-\infty}^{\infty} d\varepsilon \int_{-\infty}^{\infty} ds J\left(\varepsilon+\frac{s}{2},\varepsilon-\frac{s}{2}\right) \frac{f(\varepsilon+\frac{s}{2})-f(\varepsilon-\frac{s}{2})}{s} \delta(s+\omega) \\
 & = \frac{\pi}{V} \int_{-\infty}^{\infty} d\varepsilon J\left(\varepsilon+\frac{s}{2},\varepsilon-\frac{s}{2}\right) \frac{f(\varepsilon+\frac{s}{2})-f(\varepsilon-\frac{s}{2})}{s}
-\end{aligned}$$
+\end{aligned}
+$$
+
 The factor $J\left(\varepsilon+\frac{s}{2},\varepsilon-\frac{s}{2}\right)$ is the subject of `mlganderson-new-2-calc-j.py` and `mlganderson-new-3-combine-j.py`, where the Dirac deltas are treated by binning them into divisions in the space of $\varepsilon$ and $s$.
 
 ## Overview - code
